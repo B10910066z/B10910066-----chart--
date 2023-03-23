@@ -13,7 +13,8 @@
 <body>
 
     <canvas id="mkShare"></canvas>
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped"> 
+        <!-- 上面用class名稱來設定樣式 -->
         <!-- <thead>
             <tr>
                 <th>排名</th>
@@ -55,17 +56,7 @@
                 let table = document.getElementsByClassName("table table-bordered table-striped")[0];
                 let thead = document.createElement('thead');
                 let tbody = document.createElement('tbody');
-                let titles = ["排名", "公司名稱", "國別", "市佔率"];
-                let marketingShare_data1 = Object.values(marketingShare_old[0]);
-                let marketingShare_data2 = Object.values(marketingShare_old[1]);
-                let marketingShare_data3 = Object.values(marketingShare_old[2]);
-                let marketingShare_data4 = Object.values(marketingShare_old[3]);
-                let marketingShare_data5 = Object.values(marketingShare_old[4]);
-                let marketingShare_data6 = Object.values(marketingShare_old[5]);
-                let marketingShare_data7 = Object.values(marketingShare_old[6]);
-                let marketingShare_data8 = Object.values(marketingShare_old[7]);
-                let marketingShare_data9 = Object.values(marketingShare_old[8]);
-                let marketingShare_data10 = Object.values(marketingShare_old[9]);
+
 
         const marketingShare = {
             version: "v1.0",
@@ -94,16 +85,11 @@
                 data.push(corp.Ratio);
             });
             drawPieChart(companies, data);
-            createTable(titles, marketingShare_data1);
-            addData(tbody, marketingShare_data2);
-            addData(tbody, marketingShare_data3);
-            addData(tbody, marketingShare_data4);
-            addData(tbody, marketingShare_data5);
-            addData(tbody, marketingShare_data6);
-            addData(tbody, marketingShare_data7);
-            addData(tbody, marketingShare_data8);
-            addData(tbody, marketingShare_data9);
-            addData(tbody, marketingShare_data10);
+            addData(thead, marketingShare.titles);
+            for(var i = 0; i < marketingShare_old.length; i++){      //網頁的console會自動宣告一些東西,例如values會被網站自動宣告,所以網頁console不用加入Object,但是正常打成是馬需要,這裡要注意
+                    addData(tbody, Object.values(marketingShare.data[i]));      //Object.values意思是找尋
+                }
+            
         }
     </script>
 
@@ -113,7 +99,7 @@
             //Pie Chart圓餅圖
             let ctxPie = document.getElementById("mkShare");
             var pieChart = new Chart(ctxPie, {
-                type: 'pie',
+                type : 'pie' ,
                 data: {
                     labels: companyArray,
                     datasets: [{
@@ -133,18 +119,21 @@
                     }],
                 },
                 options: {
-                    responsive: true,
+                    responsive: true,  //responsive 是指圖表要不要隨裝置縮放
+                    // 表格標題
                     title: {
-                        display: true,
+                        display: true,  //要不要顯示標題
                         fontSize: 26,
                         text: '2021年全球晶圓代工市佔率%'
                     },
+                    // 移到點上的提示框
                     tooltips: {
                         mode: 'point',
                         intersect: true,
                     },
+                    // 圖例
                     legend: {
-                        position: 'bottom',
+                        position: 'bottom',     //要將圖例顯示在哪
                         labels: {
                             fontColor: 'black',
                         }
